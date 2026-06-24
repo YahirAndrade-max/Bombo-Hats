@@ -6,7 +6,7 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 'Admin') header("Location: lo
 
 $mensaje = "";
 
-// 1. LÓGICA PARA ACTUALIZAR PRECIO Y STOCK
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_stock'])) {
     $id = $_POST['id_gorra'];
     $precio = $_POST['precio'];
@@ -17,12 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_stock'])) {
     }
 }
 
-// 2. LÓGICA PARA ELIMINAR LA GORRA DEL CATÁLOGO
+
 if (isset($_GET['eliminar'])) {
     $id_eliminar = $_GET['eliminar'];
     
-    // Primero opcionalmente se puede buscar el nombre de la imagen para borrar el archivo físico, 
-    // pero para no complicar tu base de datos, hacemos el DELETE directo.
+ 
     if($conn->query("DELETE FROM catalogo_gorras WHERE id='$id_eliminar'")) {
         $mensaje = "🗑️ Gorra eliminada del catálogo correctamente.";
     } else {
@@ -47,14 +46,14 @@ $gorras = $conn->query("SELECT * FROM catalogo_gorras");
         td { padding: 1rem; border-bottom: 1px solid #1f1f23; vertical-align: middle; }
         .mini-input { background: #09090b; border: 1px solid #27272a; color: white; padding: 0.5rem; border-radius: 6px; width: 90px; text-align: center; font-family: inherit;}
         
-        /* Botones de acción organizados */
+        
         .actions-cell { display: flex; gap: 0.5rem; align-items: center; }
         .btn-save { background: transparent; border: 1px solid #00ff88; color: white; padding: 0.4rem 1rem; border-radius: 6px; cursor: pointer; font-weight:600; transition: 0.2s;}
         .btn-save:hover { background: #00ff88; color: #09090b;}
         .btn-delete { background: transparent; border: 1px solid #ff4444; color: #ff4444; text-decoration: none; padding: 0.4rem 1rem; border-radius: 6px; font-weight:600; font-size: 0.9rem; transition: 0.2s;}
         .btn-delete:hover { background: #ff4444; color: white;}
         
-        /* Estilo para las fotos redondas o cuadradas elegantes */
+       
         .img-preview { width: 55px; height: 55px; object-fit: cover; border-radius: 8px; border: 1px solid #27272a; background: #09090b; }
     </style>
 </head>

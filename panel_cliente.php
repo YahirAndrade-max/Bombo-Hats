@@ -35,7 +35,6 @@ if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
     </style>
 </head>
 <body>
-
     <header>
         <h1>Bombolombo Hats</h1>
         <div style="display:flex; gap:1rem; align-items:center;">

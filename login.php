@@ -6,12 +6,12 @@ $error = "";
 $exito = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // ACCIÓN: INICIAR SESIÓN
+
     if (isset($_POST['accion_login'])) {
         $correo = $_POST['correo'];
         $password = $_POST['password'];
 
-        // Sanitización básica para mitigar riesgos en consultas
+  
         $correo = $conn->real_escape_string($correo);
         $password = $conn->real_escape_string($password);
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // ACCIÓN: CREAR CUENTA NUEVA (SOLO CLIENTES)
+   
     if (isset($_POST['accion_registro'])) {
         $nombre = $_POST['reg_nombre'];
         $correo = $_POST['reg_correo'];
@@ -46,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $correo = $conn->real_escape_string($correo);
         $password = $conn->real_escape_string($password);
 
-        // Validar si el correo ya se encuentra registrado previamente
+     
         $check_correo = "SELECT id FROM usuarios WHERE correo = '$correo'";
         $res_check = $conn->query($check_correo);
 
         if ($res_check && $res_check->num_rows > 0) {
             $error = "El correo electrónico ya se encuentra registrado.";
         } else {
-            // Inserción atómica en la tabla usuarios con rol exclusivo de Cliente
+          
             $sql_insert = "INSERT INTO usuarios (nombre, correo, password, rol) VALUES ('$nombre', '$correo', '$password', '$rol_por_defecto')";
             
             if ($conn->query($sql_insert)) {
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .error { color: #ff4444; font-size: 0.9rem; margin-bottom: 1.5rem; background: rgba(255, 68, 68, 0.1); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(255, 68, 68, 0.2); }
         .exito { color: #00e676; font-size: 0.9rem; margin-bottom: 1.5rem; background: rgba(0, 230, 118, 0.1); padding: 0.8rem; border-radius: 10px; border: 1px solid rgba(0, 230, 118, 0.2); }
         
-        /* Controles interactivos para alternar formularios */
+        
         .toggle-link { color: #a1a1aa; font-size: 0.9rem; margin-top: 1.5rem; display: block; cursor: pointer; text-decoration: underline; font-weight: 400; }
         .toggle-link:hover { color: #ff2a74; }
         .form-section { display: none; }
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <script>
         function alternarFormulario(pantalla) {
-            // Remover alertas existentes al cambiar de vista para limpiar la interfaz
+         
             const errores = document.querySelectorAll('.error, .exito');
             errores.forEach(el => el.style.display = 'none');
 

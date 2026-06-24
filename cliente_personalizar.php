@@ -12,14 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar_custom'])) {
     $direccion = $_POST['direccion'];
     $metodo_pago = $_POST['metodo_pago'];
     
-    // Tratamiento de Tarjeta Segura Solicitado
     $num_tarjeta = !empty($_POST['num_tarjeta']) ? substr($_POST['num_tarjeta'], -4) : NULL; // Se guardan solo los últimos 4 dígitos por seguridad
     
     $foto_diseno = $_FILES['foto_diseno']['name'];
     $tmp_file = $_FILES['foto_diseno']['tmp_name'];
     
     if (move_uploaded_file($tmp_file, "uploads/" . $foto_diseno) || !empty($foto_diseno)) {
-        // En caso de que falle la carga nativa en entorno local, forzar string
+ 
         if(empty($foto_diseno)) $foto_diseno = "custom_placeholder.jpg";
         
         $sql = "INSERT INTO pedidos_personalizados (id_usuario, color_gorra, talla, imagen_diseno, precio_fijo, direccion, num_tarjeta, metodo_pago, estado) 

@@ -6,7 +6,7 @@ if(!isset($_SESSION['rol'])) header("Location: login.php");
 
 $id_operador = $_SESSION['id_usuario'];
 
-// Lógica de actualización de estado
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['cambiar_estado'])) {
     $id_pedido = $_POST['id_pedido'];
     $nuevo_estado = $_POST['nuevo_estado'];

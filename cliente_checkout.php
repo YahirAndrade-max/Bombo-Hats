@@ -7,7 +7,7 @@ if (!isset($_SESSION['rol'])) header("Location: login.php");
 $error_stock = "";
 $gran_total = 0;
 
-// 1. LÓGICA PARA ELIMINAR UN ARTÍCULO ESPECÍFICO DEL CARRITO
+
 if (isset($_GET['eliminar'])) {
     $llave_eliminar = $_GET['eliminar'];
     if (isset($_SESSION['carrito'][$llave_eliminar])) {
@@ -17,16 +17,16 @@ if (isset($_GET['eliminar'])) {
     exit();
 }
 
-// 2. PROCESAMIENTO DEL PAGO (SIN LA COLUMNA 'ciudad')
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pagar_carrito'])) {
     if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])) {
         $id_usuario = $_SESSION['id_usuario'];
         
-        // Juntamos la calle y la ciudad en una sola variable de texto para la columna 'direccion'
+        
         $direccion_completa = $_POST['direccion'] . " - Ciudad: " . $_POST['ciudad'];
         $metodo_pago = $_POST['metodo_pago'];
         
-        // Guardar solo los últimos 4 dígitos si es tarjeta
+        
         $num_tarjeta = !empty($_POST['num_tarjeta']) ? substr($_POST['num_tarjeta'], -4) : NULL;
         
         $conn->begin_transaction(); // Transacción SQL segura
@@ -37,16 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pagar_carrito'])) {
                 $talla = $item['talla'];
                 $cant = $item['cantidad'];
                 
-                // Inspeccionar inventario en tiempo real
+             
                 $gorra = $conn->query("SELECT * FROM catalogo_gorras WHERE id = '$id_g'")->fetch_assoc();
                 
                 if ($gorra['stock'] >= $cant) {
                     $total_item = $gorra['precio'] * $cant;
                     
-                    // A) Restar stock automáticamente
+                
                     $conn->query("UPDATE catalogo_gorras SET stock = stock - $cant WHERE id = '$id_g'");
                     
-                    // B) Registrar compra (CORREGIDO: Quitamos la columna 'ciudad' que rompía todo)
+                    
                     $sql_insert = "INSERT INTO pedidos_catalogo (id_usuario, id_gorra, talla, cantidad, precio_total, direccion, num_tarjeta, metodo_pago, estado) 
                                    VALUES ('$id_usuario', '$id_g', '$talla', '$cant', '$total_item', '$direccion_completa', '$num_tarjeta', '$metodo_pago', 'Pendiente')";
                     $conn->query($sql_insert);

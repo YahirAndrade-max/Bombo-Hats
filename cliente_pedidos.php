@@ -6,10 +6,9 @@ if (!isset($_SESSION['id_usuario'])) header("Location: login.php");
 
 $id_usuario = $_SESSION['id_usuario'];
 
-// 1. Consulta para productos de catálogo (Con JOIN correcto)
 $pedidos_cat = $conn->query("SELECT p.*, g.nombre FROM pedidos_catalogo p JOIN catalogo_gorras g ON p.id_gorra = g.id WHERE p.id_usuario = '$id_usuario' ORDER BY p.fecha DESC");
 
-// 2. Consulta corregida asignando el alias 'p' a la tabla para que funcione el WHERE
+
 $pedidos_pers = $conn->query("SELECT p.* FROM pedidos_personalizados p WHERE p.id_usuario = '$id_usuario' ORDER BY p.fecha DESC");
 ?>
 <!DOCTYPE html>

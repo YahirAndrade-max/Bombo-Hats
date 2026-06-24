@@ -11,23 +11,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['guardar_gorra'])) {
     $precio = $_POST['precio'];
     $stock = $_POST['stock'];
     
-    // Configuración de Carga de Imagen Real
+   
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
         $nombre_original = $_FILES['foto']['name'];
         $ruta_temporal = $_FILES['foto']['tmp_name'];
         
-        // 1. Asegurar que la carpeta exista físicamente
+      
         if(!is_dir("uploads")) { 
             mkdir("uploads", 0777, true); 
         }
         
-        // 2. Crear un nombre único para evitar que archivos con el mismo nombre se encimen
+     
         $nombre_imagen_unico = time() . "_" . basename($nombre_original);
         $carpeta_destino = "uploads/" . $nombre_imagen_unico;
         
-        // 3. Mover el archivo real al servidor
+       
         if (move_uploaded_file($ruta_temporal, $carpeta_destino)) {
-            // Guardamos el nombre único en la base de datos
+           
             $sql = "INSERT INTO catalogo_gorras (nombre, precio, imagen_ruta, stock) VALUES ('$nombre', '$precio', '$nombre_imagen_unico', '$stock')";
             
             if($conn->query($sql)) {

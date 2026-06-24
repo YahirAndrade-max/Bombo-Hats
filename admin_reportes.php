@@ -4,14 +4,14 @@ session_start();
 include 'conexion.php';
 if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 'Admin') header("Location: login.php");
 
-// 1. Ganancias Netas Totales (De Catálogo)
+
 $total_cat = $conn->query("SELECT SUM(precio_total) AS ingresos FROM pedidos_catalogo WHERE estado='Entregado'")->fetch_assoc();
-// 2. Ganancias Netas Totales (De Personalizados)
+
 $total_pers = $conn->query("SELECT SUM(precio_fijo) AS ingresos FROM pedidos_personalizados WHERE estado='Terminado'")->fetch_assoc();
 
 $ingresos_globales = $total_cat['ingresos'] + $total_pers['ingresos'];
 
-// 3. Quién vendió qué cosa (Rendimiento de Administradores y Trabajadores al cambiar estatus de catálogo)
+
 $sql_rendimiento = "SELECT u.nombre AS empleado, COUNT(p.id) AS despachados, SUM(p.precio_total) AS volumen 
                     FROM pedidos_catalogo p 
                     JOIN usuarios u ON p.id_atendido_por = u.id 
