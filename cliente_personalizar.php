@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['enviar_custom'])) {
     $direccion = $_POST['direccion'];
     $metodo_pago = $_POST['metodo_pago'];
     
-    $num_tarjeta = !empty($_POST['num_tarjeta']) ? substr($_POST['num_tarjeta'], -4) : NULL; // Se guardan solo los últimos 4 dígitos por seguridad
+    $num_tarjeta = !empty($_POST['num_tarjeta']) ? substr($_POST['num_tarjeta'], -4) : NULL; 
     
     $foto_diseno = $_FILES['foto_diseno']['name'];
     $tmp_file = $_FILES['foto_diseno']['tmp_name'];

@@ -6,7 +6,7 @@ if(!isset($_SESSION['rol']) || $_SESSION['rol'] != 'Admin') header("Location: lo
 
 $mensaje = "";
 
-// ACCIÓN: ELIMINAR USUARIO
+
 if(isset($_GET['eliminar'])) {
     $id_eliminar = $conn->real_escape_string($_GET['eliminar']);
     
@@ -22,7 +22,7 @@ if(isset($_GET['eliminar'])) {
     }
 }
 
-// ACCIÓN: CREAR USUARIO
+
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['crear_usuario'])) {
     $nombre = $_POST['nombre'];
     $correo = $_POST['correo'];
